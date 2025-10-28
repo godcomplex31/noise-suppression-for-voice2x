@@ -9,6 +9,10 @@ set(CMAKE_BINARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 set(MINGW_ADDITIONAL_LINKING_FLAGS "-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic")
 
+if(MSVC)
+    add_compile_options(/O2)
+endif()
+
 if(NOT BUILD_VERSION)
     set(BUILD_VERSION 1.99)
 endif()
@@ -30,9 +34,6 @@ endif ()
 
 add_subdirectory(external/rnnoise)
 add_subdirectory(src/common)
-if (BUILD_LADSPA_PLUGIN)
-    add_subdirectory(src/ladspa_plugin)
-endif ()
 
 if (BUILD_VST_PLUGIN OR BUILD_VST3_PLUGIN OR BUILD_LV2_PLUGIN OR BUILD_AU_PLUGIN OR BUILD_AUV3_PLUGIN)
     if (USE_SYSTEM_JUCE)
